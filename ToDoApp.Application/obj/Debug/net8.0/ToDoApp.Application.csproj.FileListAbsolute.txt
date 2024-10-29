@@ -1,0 +1,15 @@
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/bin/Debug/net8.0/ToDoApp.Application.deps.json
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/bin/Debug/net8.0/ToDoApp.Application.dll
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/bin/Debug/net8.0/ToDoApp.Application.pdb
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/bin/Debug/net8.0/ToDoApp.Infrastructure.dll
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/bin/Debug/net8.0/ToDoApp.Infrastructure.pdb
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/obj/Debug/net8.0/ToDoApp.Application.csproj.AssemblyReference.cache
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/obj/Debug/net8.0/ToDoApp.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/obj/Debug/net8.0/ToDoApp.Application.AssemblyInfoInputs.cache
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/obj/Debug/net8.0/ToDoApp.Application.AssemblyInfo.cs
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/obj/Debug/net8.0/ToDoApp.Application.csproj.CoreCompileInputs.cache
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/obj/Debug/net8.0/ToDoApp..8F0EDDB9.Up2Date
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/obj/Debug/net8.0/ToDoApp.Application.dll
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/obj/Debug/net8.0/refint/ToDoApp.Application.dll
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/obj/Debug/net8.0/ToDoApp.Application.pdb
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/obj/Debug/net8.0/ref/ToDoApp.Application.dll

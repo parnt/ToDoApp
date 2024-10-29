@@ -1,0 +1,256 @@
+﻿@{
+    ViewData["Title"] = "Todo List";
+    
+    var daysOfWeek = new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+}
+
+<div class="container mt-3">
+    <div class="row">
+        @{
+            for (var i = 0; i < 7; i++)
+            {
+                <div class="col column">
+                    <h5 class="text-center">@daysOfWeek[i]</h5>
+                    <h6 class="text-center" id="dayDate-@i"></h6>
+                    <button class="btn btn-outline-success btn-sm mb-3" onclick="openAddModal('@i')">Add new</button>
+                    <div id="tasks-@i" class="task-container"></div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<template id="task-template">
+    <div class="card mb-2 card-item">
+        <div class="card-body">
+            <h5 class="card-title"></h5>
+            <h6 class="card-subtitle mb-2 text-muted"></h6>
+            <p class="card-text">Due: </p>
+            <a href="#" class="card-link" onclick="">Edit</a>
+            <a href="#" class="card-link text-danger" onclick="">Delete</a>
+        </div>
+    </div>
+</template>
+
+@await Html.PartialAsync("Partials/AddToDoModal")
+@await Html.PartialAsync("Partials/DeleteConfirmModal")
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            setWeekPicker();
+            updateWeek();
+
+            addItemOnClickHandler();
+            deleteItemOnClickHandler();
+            weekPickerOnChangeHandler();
+
+            addSignal();
+        });
+        
+        function addSignal() {
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/notificationHub")
+                .configureLogging(signalR.LogLevel.Information)
+                .build();
+
+            connection.on("NotifyUpcomingTasks", function (message) {
+                toastr.warning(message, "Upcoming Tasks", {
+                    closeButton: true,
+                    timeOut: 0,
+                    extendedTimeOut: 0
+                });
+            });
+
+            connection.start().catch(function (err) {
+                console.error(err.toString());
+            });
+        }
+        
+        function addItemOnClickHandler() {
+            $('#add-item-save-button').click(function () {
+                const formData = $('#addForm').serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddToDoItem", "Home")',
+                    data: formData,
+                    success: function () {
+                        toastr.success('Item added successfully', "Success");
+
+                        loadTasks();
+                        $('#addModal').modal('hide');
+                        $('#addForm')[0].reset();
+                    },
+                    error: handleError
+                });
+            });
+        }
+        
+        function deleteItemOnClickHandler() {
+            $('#confirmDeleteButton').click(function () {
+                let id = $('#delete-item-id').val();
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: `@Url.Action("DeleteToDoItem", "Home")?id=${id}`,
+                    success: function () {
+                        toastr.success('Item deleted successfully', "Success");
+
+                        loadTasks();
+                        $('#deleteModal').modal('hide');
+                        $('#delete-item-id').val("");
+                    },
+                    error: handleError
+                });
+            });
+        }
+        
+        function weekPickerOnChangeHandler() {
+            $('#weekPicker').on('change', function () {
+                updateWeek();
+            });
+        }
+
+        function loadTasks() {
+            const weekValue = $('#weekPicker').val();
+            const [year, week] = weekValue.split('-W');
+            const monday = getMondayOfWeek(year, week);
+            const startDateString = monday.toISOString();
+            
+            $.ajax({
+                url: `@Url.Action("GetAllToDoItems", "Home")?startDate=${startDateString}`,
+                method: 'GET',
+                success: function (data) {
+                    for (let index = 0; index < 7; index++) {
+                        const dayDate = new Date(monday);
+                        dayDate.setDate(dayDate.getDate() + index);
+                        const $taskContainer = $(`#tasks-${index}`);
+                        $taskContainer.empty();
+
+                        const filteredTasks = data.filter(task => {
+                            const taskDate = new Date(task.dueDate);
+                            return taskDate.toDateString() === dayDate.toDateString();
+                        });
+                        
+                        appendCards($taskContainer, filteredTasks);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Błąd w trakcie ładowania zadań:", error);
+                }
+            });
+        }
+        
+        function appendCards($taskContainer, filteredTasks) {
+            filteredTasks.forEach(task => {
+                const $template = $($("#task-template").html());
+
+                if (task.isCompleted) {
+                    $template.find(".card-body").addClass("done-card").removeClass("card-todo");
+                } else {
+                    $template.find(".card-body").addClass("card-todo").removeClass("done-card");
+                }
+                
+                addText($template, "card-title", task.title);
+                addText($template, "card-subtitle", task.description);
+                addText($template, "card-text", new Date(task.dueDate).toLocaleString(undefined, dateFormatOptions));
+                addAttribute($template, "card-link", "onclick", `openEditModal(${task.id})`);
+                addAttribute($template, "text-danger", "onclick", `openDeleteModal(${task.id})`);
+
+                $taskContainer.append($template);
+            });
+        }
+        
+        function addText($template, className, textValue) {
+            $template.find(`.${className}`).text(textValue);
+        }
+        
+        function addAttribute($template, className, attrName, attrValue) {
+            $template.find(`.${className}`).attr(attrName, attrValue);
+        }
+        
+        function openAddModal(index) {
+            let date = $(`#dayDate-${index}`).text().trim();
+            let formattedDate = parseDateToISOString(date);
+            $('#add-item-due-date').val(formattedDate);
+            $('#addModal').modal('show');
+        }
+
+        $('#addModal').on('hidden.bs.modal', function () {
+            $('#addForm')[0].reset();
+        });
+
+        function openEditModal(id) {
+            $.get(`@Url.Action("Edit", "Home")?id=${id}`, function(data) {
+                $('body').append(data);
+                $('#editModal').modal('show');
+
+                $('#editModal').on('hidden.bs.modal', function () {
+                    $(this).remove();
+                });
+                
+                $('#edit-item-save-button').on('click', function() {
+                    const formData = $('#editForm').serialize();
+
+                    $.ajax({
+                        type: 'PUT',
+                        url: '@Url.Action("UpdateToDoItem", "Home")',
+                        data: formData,
+                        success: function () {
+                            toastr.success('Item edited successfully', "Success");
+
+                            loadTasks();
+                            $('#editModal').modal('hide');
+                        },
+                        error: handleError
+                    });
+                });
+            });
+        }
+
+        function openDeleteModal(id) {
+            $('#delete-item-id').val(id);
+            $('#deleteModal').modal('show');
+        }
+
+        $('#deleteModal').on('hidden.bs.modal', function () {
+            $('#delete-item-id').val("");
+        });
+
+        function updateWeek() {
+            const selectedWeek = $('#weekPicker').val();
+            if (!selectedWeek) return;
+            
+            const year = parseInt(selectedWeek.substring(0, 4));
+            const week = parseInt(selectedWeek.substring(6));
+            const startDate = getMondayOfWeek(year, week);
+            
+            for (let i = 0; i < 7; i++) {
+                const currentDay = new Date(startDate);
+                currentDay.setDate(startDate.getDate() + i);
+                
+                const formattedDate = currentDay.toLocaleDateString('pl-PL', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                });
+
+                $(`#dayDate-${i}`).text(formattedDate);
+            }
+            
+            loadTasks();
+        }
+        
+        function setWeekPicker() {
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const firstMonday = getFirstMonday(currentYear);
+            const daysDifference = Math.floor((currentDate - firstMonday) / (1000 * 60 * 60 * 24));
+            const currentWeekNumber = Math.floor(daysDifference / 7) + 1;
+
+            const formattedWeek = `${currentYear}-W${String(currentWeekNumber).padStart(2, '0')}`;
+            $('#weekPicker').val(formattedWeek);
+        }
+    </script>
+}

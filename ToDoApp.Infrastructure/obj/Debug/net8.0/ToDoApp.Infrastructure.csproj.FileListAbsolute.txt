@@ -1,0 +1,11 @@
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Infrastructure/bin/Debug/net8.0/ToDoApp.Infrastructure.deps.json
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Infrastructure/bin/Debug/net8.0/ToDoApp.Infrastructure.dll
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Infrastructure/bin/Debug/net8.0/ToDoApp.Infrastructure.pdb
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Infrastructure/obj/Debug/net8.0/ToDoApp.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Infrastructure/obj/Debug/net8.0/ToDoApp.Infrastructure.AssemblyInfoInputs.cache
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Infrastructure/obj/Debug/net8.0/ToDoApp.Infrastructure.AssemblyInfo.cs
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Infrastructure/obj/Debug/net8.0/ToDoApp.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Infrastructure/obj/Debug/net8.0/ToDoApp.Infrastructure.dll
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Infrastructure/obj/Debug/net8.0/refint/ToDoApp.Infrastructure.dll
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Infrastructure/obj/Debug/net8.0/ToDoApp.Infrastructure.pdb
+/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Infrastructure/obj/Debug/net8.0/ref/ToDoApp.Infrastructure.dll

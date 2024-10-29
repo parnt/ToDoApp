@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "mpcHhwOCDMiQvLyOlmnufq0RGFIUMvXZtX5HRNKG74QIdo1nxDyYQNjP7JLqKPNSB6iEGsmtjo95ZkREuApBYA==",
+  "success": true,
+  "projectFilePath": "/Users/parnt/RiderProjects/ToDoApp/ToDoApp.Application/ToDoApp.Application.csproj",
+  "expectedPackageFiles": [
+    "/Users/parnt/.nuget/packages/fluentvalidation/11.10.0/fluentvalidation.11.10.0.nupkg.sha512",
+    "/Users/parnt/.nuget/packages/mediatr/12.4.1/mediatr.12.4.1.nupkg.sha512",
+    "/Users/parnt/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
+    "/Users/parnt/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

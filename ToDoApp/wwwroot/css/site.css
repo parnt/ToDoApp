@@ -1,0 +1,57 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background-color: rgb(240, 240, 240);
+}
+
+.card-item {
+  border: none;
+  width: 13rem;
+}
+
+.card-todo {
+  background-color: rgba(243, 243, 243, 0.87);
+}
+
+.card-todo:hover {
+  background-color: rgba(243, 243, 243, 0.40);
+}
+
+.done-card {
+  background-color: rgba(243, 243, 243, 0.27);
+  color: #b1b1b1;
+}
+
+.done-card:hover {
+  background-color: rgba(243, 243, 243, 0.05);
+  background-color: #fffcfc;
+}
+
+.column {
+  min-width: 14rem;
+  min-height: 20rem;
+  background-color: white;
+  margin: 1rem;
+  padding: 5px;
+  justify-items: center;
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+  border-radius: 6px;
+}
